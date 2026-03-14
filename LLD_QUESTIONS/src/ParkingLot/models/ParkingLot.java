@@ -1,6 +1,7 @@
 package ParkingLot.models;
 
 import ParkingLot.enums.VehicleType;
+import ParkingLot.strategy.PaymentStrategy;
 import ParkingLot.strategy.PricingStrategy;
 
 import java.math.BigDecimal;

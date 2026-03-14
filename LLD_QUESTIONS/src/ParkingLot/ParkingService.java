@@ -4,7 +4,9 @@ import ParkingLot.enums.SpotSize;
 import ParkingLot.enums.VehicleType;
 import ParkingLot.models.*;
 import ParkingLot.strategy.HourlyPricingStrategy;
+import ParkingLot.strategy.PaymentStrategy;
 import ParkingLot.strategy.PricingStrategy;
+import ParkingLot.strategy.UpiPayment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +34,9 @@ public class ParkingService {
         }else{
             System.out.println("Your vehicle is parked at: "+t1.getParkingSpot().getSpotNumber());
         }
+        PaymentStrategy paymentStrategy = new UpiPayment();
         PaymentReceipt receipt = parkLot.unparkVehicle(t1.getTicketId());
+        paymentStrategy.processPayment(receipt.getAmount());
+        System.out.println("Done "+receipt.getTicket().getTicketId());
     }
 }

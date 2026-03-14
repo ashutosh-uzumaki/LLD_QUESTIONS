@@ -22,13 +22,4 @@ public class Floor {
         return null;
     }
 
-    public List<ParkingSpot> findAvailableSpots() {
-        List<ParkingSpot> availableSpots = new ArrayList<>();
-        for (ParkingSpot spot : parkingSpots) {
-            if (spot.isAvailable()) {
-                availableSpots.add(spot);
-            }
-        }
-        return availableSpots;
-    }
 }
