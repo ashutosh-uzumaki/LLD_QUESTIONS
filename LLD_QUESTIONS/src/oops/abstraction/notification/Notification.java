@@ -25,7 +25,7 @@ public abstract class Notification {
 
     public void send(){
         if(!validateNotification()){
-            throw new IllegalArgumentException("Validation Failed")
+            throw new IllegalArgumentException("Validation Failed");
         }
         deliverNotification();
     }
