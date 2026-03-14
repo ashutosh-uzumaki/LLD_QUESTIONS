@@ -2,6 +2,7 @@ package ParkingLot;
 
 import ParkingLot.enums.SpotSize;
 import ParkingLot.enums.VehicleType;
+import ParkingLot.factory.VehicleFactory;
 import ParkingLot.models.*;
 import ParkingLot.strategy.HourlyPricingStrategy;
 import ParkingLot.strategy.PaymentStrategy;
@@ -13,6 +14,7 @@ import java.util.List;
 
 public class ParkingService {
     public static void main(String[] args) {
+        VehicleFactory vehicleFactory = new VehicleFactory();
         PricingStrategy pricingStrategy = new HourlyPricingStrategy();
         ParkingSpot spot = new ParkingSpot("A01", SpotSize.SMALL);
         ParkingSpot spot2 = new ParkingSpot("A02", SpotSize.LARGE);
@@ -21,13 +23,13 @@ public class ParkingService {
         List<Floor> floors = List.of(floor1);
         ParkingLot parkLot = new ParkingLot(floors, pricingStrategy);
 
-        Vehicle v1 = new Vehicle("KA-01-AB-231", VehicleType.CAR);
+        Vehicle v1 = vehicleFactory.createVehicle("KA-01-AB-231", "car");
         Ticket t = parkLot.parkVehicle(v1);
         if(t == null){
             System.out.println("Sorry!!! No available spots");
         }
 
-        Vehicle v2 = new Vehicle("KA-01-AB-345", VehicleType.BIKE);
+        Vehicle v2 = vehicleFactory.createVehicle("KA-01-AM-345", "bike");
         Ticket t1 = parkLot.parkVehicle(v2);
         if(t1 == null){
             System.out.println("Sorry!!! No available spots");
