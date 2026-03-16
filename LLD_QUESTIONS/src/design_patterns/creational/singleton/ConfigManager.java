@@ -1,6 +1,4 @@
-package design_patterns.singleton;
-
-import ParkingLot.strategy.PaymentStrategy;
+package design_patterns.creational.singleton;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
