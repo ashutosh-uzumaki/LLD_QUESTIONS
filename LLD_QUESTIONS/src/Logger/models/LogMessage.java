@@ -9,10 +9,10 @@ public final class LogMessage {
     private final LogLevel logLevel;
     private final LocalDateTime timeStamp;
 
-    public LogMessage(String message, LogLevel logLevel, LocalDateTime timeStamp){
+    public LogMessage(String message, LogLevel logLevel){
         this.message = message;
         this.logLevel = logLevel;
-        this.timeStamp = timeStamp;
+        this.timeStamp = LocalDateTime.now();
     }
 
     public String getMessage() {

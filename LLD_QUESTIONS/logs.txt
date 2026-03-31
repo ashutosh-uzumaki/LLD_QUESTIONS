@@ -1,0 +1,8 @@
+2026-03-31 23:09:56 INFO Application started
+2026-03-31 23:09:56 DEBUG Debug message (visible if threshold <= DEBUG)
+2026-03-31 23:09:56 ERROR Something went wrong!
+2026-03-31 23:09:56 INFO Log from thread-1
+2026-03-31 23:09:56 INFO Log from thread-0
+2026-03-31 23:09:56 INFO Log from thread-2
+2026-03-31 23:09:56 INFO Log from thread-3
+2026-03-31 23:09:56 INFO Log from thread-4
