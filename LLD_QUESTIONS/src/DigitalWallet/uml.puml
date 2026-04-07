@@ -1,0 +1,95 @@
+@startuml Digital Wallet System
+
+skinparam classAttributeIconSize 0
+skinparam class {
+    BackgroundColor White
+    BorderColor Black
+    ArrowColor Black
+}
+
+' Enums
+enum TransactionStatus {
+    CREATED
+    PENDING
+    SUCCESS
+    FAILED
+}
+
+' Value Objects
+class Money {
+    - final BigDecimal amount
+    - final String currency
+    + Money(BigDecimal amount, String currency)
+    + Money add(Money other)
+    + Money subtract(Money other)
+    + BigDecimal getAmount()
+    + String getCurrency()
+}
+
+' Entities
+class Transaction {
+    - final String txId
+    - final Money amount
+    - TransactionStatus status
+    - final LocalDateTime timeStamp
+    + Transaction(String txId, Money amount, LocalDateTime timeStamp, TransactionStatus status)
+    + String getTxId()
+    + Money getAmount()
+    + TransactionStatus getStatus()
+    + void setStatus(TransactionStatus status)
+    + LocalDateTime getTimeStamp()
+}
+
+class Wallet {
+    - final String id
+    - Money balance
+    - final List<Transaction> transactions
+    - final ReentrantLock lock
+    + Wallet(String id)
+    + void addMoney(Money amount)
+    + boolean transfer(Wallet dest, Money amount)
+    + Money getBalance()
+    + List<Transaction> getHistory()
+    + String getId()
+}
+
+class User {
+    - final String id
+    - final String name
+    - Wallet wallet
+    + User(String id, String name)
+    + Wallet createWallet()
+    + Wallet getWallet()
+    + String getId()
+    + String getName()
+}
+
+' Relationships
+User "1" o-- "0..1" Wallet : creates >
+Wallet "1" *-- "0..*" Transaction : contains >
+Wallet "1" -- "1" Money : has >
+Transaction "0..*" -- "1" Money : references >
+Transaction "0..*" -- "1" TransactionStatus : has >
+
+note right of Money
+  Immutable Value Object
+  - Thread-safe by design
+  - No setters
+  - BigDecimal for precision
+end note
+
+note right of Wallet
+  Thread-Safe Entity
+  - ReentrantLock for concurrency
+  - Lock ordering prevents deadlock
+  - Mutable balance
+end note
+
+note right of Transaction
+  Mostly Immutable Record
+  - Status can change (lifecycle)
+  - Audit trail
+  - Timestamp recorded once
+end note
+
+@enduml
