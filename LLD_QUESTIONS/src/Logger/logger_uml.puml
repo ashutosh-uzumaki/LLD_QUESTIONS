@@ -1,0 +1,118 @@
+@startuml Async Logger System
+
+skinparam classAttributeIconSize 0
+skinparam class {
+    BackgroundColor White
+    BorderColor Black
+    ArrowColor Black
+}
+
+' Enums
+enum LogLevel {
+    DEBUG
+    INFO
+    WARN
+    ERROR
+}
+
+' Value Objects
+class LogMessage {
+    - final String message
+    - final LogLevel level
+    - final LocalDateTime timestamp
+    + LogMessage(String message, LogLevel level)
+    + String getMessage()
+    + LogLevel getLevel()
+    + LocalDateTime getTimestamp()
+}
+
+' Strategy Interface
+interface LogAppender {
+    + append(LogMessage message)
+    + String getName()
+}
+
+' Concrete Implementations
+class ConsoleAppender {
+    + append(LogMessage message)
+    + String getName()
+}
+
+class FileAppender {
+    - String filePath
+    + FileAppender(String filePath)
+    + append(LogMessage message)
+    + String getName()
+}
+
+class DatabaseAppender {
+    - String connectionString
+    + DatabaseAppender(String connectionString)
+    + append(LogMessage message)
+    + String getName()
+}
+
+' Main Logger Class
+class Logger {
+    - static volatile Logger instance
+    - BlockingQueue<LogMessage> queue
+    - List<LogAppender> appenders
+    - LogLevel threshold
+    - Thread dispatcher
+    + static Logger getInstance()
+    + log(LogLevel level, String message)
+    + debug(String message)
+    + info(String message)
+    + warn(String message)
+    + error(String message)
+    + addAppender(LogAppender appender)
+    + setThreshold(LogLevel level)
+}
+
+' Dispatcher Thread
+class LogDispatcher {
+    - BlockingQueue<LogMessage> queue
+    - List<LogAppender> appenders
+    + LogDispatcher(BlockingQueue<LogMessage> queue, List<LogAppender> appenders)
+    + run()
+}
+
+' Relationships
+Logger "1" *-- "0..*" LogAppender : uses >
+Logger "1" *-- "1" BlockingQueue : has >
+Logger "1" *-- "1" LogDispatcher : creates >
+LogDispatcher "1" *-- "1" BlockingQueue : consumes >
+LogDispatcher "1" *-- "0..*" LogAppender : dispatches >
+LogAppender <.. ConsoleAppender : implements
+LogAppender <.. FileAppender : implements
+LogAppender <.. DatabaseAppender : implements
+LogMessage -- LogLevel : has >
+Logger ..> LogLevel : filters by >
+Logger ..> LogMessage : creates >
+
+note right of Logger
+  Singleton Pattern
+  - Double-Checked Locking
+  - Thread-safe instance
+end note
+
+note right of LogMessage
+  Immutable Value Object
+  - Thread-safe by design
+  - No setters
+end note
+
+note right of LogAppender
+  Strategy Pattern
+  - Easy to extend
+  - Open/Closed Principle
+end note
+
+note right of LogDispatcher
+  Producer-Consumer Pattern
+  - Daemon thread
+  - Async processing
+  - BlockingQueue for backpressure
+end note
+
+@enduml
