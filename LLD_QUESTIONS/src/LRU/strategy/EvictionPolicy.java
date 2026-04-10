@@ -1,6 +1,8 @@
 package LRU.strategy;
 
-public interface EvictionPolicy<K> {
-    void recordAccess(K key);
+import LRU.model.Node;
+
+public interface EvictionPolicy<K, V> {
+    void recordAccess(Node<K, V> node);
     K evict();
 }
