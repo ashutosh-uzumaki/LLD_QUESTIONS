@@ -22,4 +22,14 @@ public class LruEvictionPolicy<K, V> implements EvictionPolicy<K, V>{
         K key = node.getKey();
         return key;
     }
+
+    @Override
+    public void addNew(Node<K, V> newNode){
+        list.addToHead(newNode);
+    }
+
+    @Override
+    public void removeNode(Node<K, V> node){
+        list.removeNode(node);
+    }
 }

@@ -34,4 +34,10 @@ public class DoublyLinkedList<K, V> {
     }
 
 
+    public void removeNode(Node<K, V> node) {
+        node.prev.next = node.next;
+        node.next.prev = node.prev;
+    }
+
+
 }
