@@ -9,13 +9,15 @@ import java.util.List;
 public class Booking {
     private final Long bookingId;
     private final Long userId;
+    private final Long showId;
     private BookingStatus bookingStatus;
     private final List<ShowSeat> showSeatList;
     private final PaymentMethod paymentMethod;
 
-    public Booking(Long bookingId, Long userId, BookingStatus bookingStatus, List<ShowSeat> showSeatList, PaymentMethod paymentMethod){
+    public Booking(Long bookingId, Long userId, Long showId, BookingStatus bookingStatus, List<ShowSeat> showSeatList, PaymentMethod paymentMethod){
         this.bookingId = bookingId;
         this.userId = userId;
+        this.showId = showId;
         this.bookingStatus = bookingStatus;
         this.showSeatList = showSeatList;
         this.paymentMethod = paymentMethod;
@@ -45,5 +47,7 @@ public class Booking {
         return paymentMethod;
     }
 
-
+    public Long getShowId() {
+        return showId;
+    }
 }
