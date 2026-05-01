@@ -4,6 +4,7 @@ import BookMyShow.enums.BookingStatus;
 import BookMyShow.enums.ShowSeatStatus;
 import BookMyShow.service.PaymentMethod;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public class Booking {
@@ -12,15 +13,17 @@ public class Booking {
     private final Long showId;
     private BookingStatus bookingStatus;
     private final List<ShowSeat> showSeatList;
-    private final PaymentMethod paymentMethod;
+    private PaymentMethod paymentMethod;
+    private BigDecimal amount;
 
-    public Booking(Long bookingId, Long userId, Long showId, BookingStatus bookingStatus, List<ShowSeat> showSeatList, PaymentMethod paymentMethod){
+    public Booking(Long bookingId, Long userId, Long showId, BookingStatus bookingStatus, List<ShowSeat> showSeatList, PaymentMethod paymentMethod, BigDecimal amount){
         this.bookingId = bookingId;
         this.userId = userId;
         this.showId = showId;
         this.bookingStatus = bookingStatus;
         this.showSeatList = showSeatList;
         this.paymentMethod = paymentMethod;
+        this.amount = amount;
     }
 
     public Long getBookingId() {
@@ -49,5 +52,17 @@ public class Booking {
 
     public Long getShowId() {
         return showId;
+    }
+
+    public void setPaymentMethod(PaymentMethod paymentMethod) {
+        this.paymentMethod = paymentMethod;
+    }
+
+    public BigDecimal getAmount() {
+        return amount;
+    }
+
+    public void setAmount(BigDecimal amount) {
+        this.amount = amount;
     }
 }

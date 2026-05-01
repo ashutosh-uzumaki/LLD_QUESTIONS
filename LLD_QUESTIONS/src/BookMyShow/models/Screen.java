@@ -4,19 +4,21 @@ import BookMyShow.enums.AudioType;
 import BookMyShow.enums.ScreenType;
 
 public class Screen {
-    private final int screenId;
+    private final Long screenId;
     private final String name;
     private final ScreenType screenType;
     private final AudioType audioType;
+    private final Long theatreId;
 
-    public Screen(int screenId, String name, ScreenType screenType, AudioType audioType) {
+    public Screen(Long screenId, String name, ScreenType screenType, AudioType audioType, Long theatreId) {
         this.screenId = screenId;
         this.name = name;
         this.screenType = screenType;
         this.audioType = audioType;
+        this.theatreId = theatreId;
     }
 
-    public int getScreenId() {
+    public Long getScreenId() {
         return screenId;
     }
 
